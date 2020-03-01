@@ -50,22 +50,22 @@ namespace LevelsJSON_Tests
             // Тест 1
             Json json = new Json("{\"key\": \"value\"}");
             var actual = json.GetLevels();
-            var expected = "{\"levels\": \"1\"}";
+            var expected = "{\"levels\": 1}";
             Assert.AreEqual(expected, actual, "Ошибка в тесте 1");
             // Тест 2
             json = new Json("{\"identity\": {\"name\": \"Test\", \"translations\": [{\"order\": 1, \"language\": \"ru\", \"value\": \"Тест\"}]}}");
             actual = json.GetLevels();
-            expected = "{\"levels\": \"4\"}";
+            expected = "{\"levels\": 4}";
             Assert.AreEqual(expected, actual, "Ошибка в тесте 2");
             // Тест 3
             json = new Json("{\"test1\": true, \"test2\": [null, 1]}");
             actual = json.GetLevels();
-            expected = "{\"levels\": \"2\"}";
+            expected = "{\"levels\": 2}";
             Assert.AreEqual(expected, actual, "Ошибка в тесте 3");
             // Тест 4
             json = new Json("{\"title\":\"Conference\",\"participants\":[{},{}]}");
             actual = json.GetLevels();
-            expected = "{\"levels\": \"3\"}";
+            expected = "{\"levels\": 3}";
             Assert.AreEqual(expected, actual, "Ошибка в тесте 4");
         }
     }

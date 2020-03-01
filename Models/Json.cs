@@ -64,7 +64,7 @@ namespace LevelsJSON.Models
                 }
                 else if (String[i] == '}' || String[i] == ']')
                     levelsCounter--;
-            return "{\"levels\": \"" + levelsNumber + "\"}";
+            return "{\"levels\": " + levelsNumber + "}";
         }
     }
 }
