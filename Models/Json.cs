@@ -53,10 +53,23 @@ namespace LevelsJSON.Models
         /// <returns>JSON-строку с информацией о количестве уровней</returns>
         public string GetLevels()
         {
-            int levelsCounter = 0;
+            int levelsCounter = 1;
             int levelsNumber = 1;
-            for (int i = 0; i < String.Length; i++)
-                if ((String[i] == '{' || String[i] == '['))
+            bool quot = false;
+            for (int i = 1; i < String.Length; i++)
+                if (quot)
+                {
+                    if (String[i] == '"' && String[i - 1] != '\\')
+                        quot = false;
+                    else
+                        continue;
+                }
+                else if (String[i] == '"' && String[i - 1] != '\\')
+                {
+                    quot = true;
+                    continue;
+                }
+                else if ((String[i] == '{' || String[i] == '['))
                 {
                     levelsCounter++;
                     if (levelsCounter > levelsNumber)

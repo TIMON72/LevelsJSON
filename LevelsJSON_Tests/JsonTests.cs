@@ -40,6 +40,10 @@ namespace LevelsJSON_Tests
             actual = new Json(1.0);
             expected = "{\"error\": \"Invalid JSON\"}";
             Assert.AreEqual(expected, actual.String, "Ошибка в тесте 7");
+            // Тест 8 (объект JSON c { [ " внутри значения)
+            actual = new Json("{\"key\": \"\\\"value1\\\" \\\"{[value2, value3]}\\\"\"}");
+            expected = "{\"key\": \"\\\"value1\\\" \\\"{[value2, value3]}\\\"\"}";
+            Assert.AreEqual(expected, actual.String, "Ошибка в тесте 8");
         }
         /// <summary>
         /// Тестирование получения количества уровней глубины вложенности
@@ -67,6 +71,11 @@ namespace LevelsJSON_Tests
             actual = json.GetLevels();
             expected = "{\"levels\": 3}";
             Assert.AreEqual(expected, actual, "Ошибка в тесте 4");
+            // Тест 5
+            json = new Json("{\"key\": \"\\\"value1\\\" \\\"{[value2, value3]}\\\"\"}");
+            actual = json.GetLevels();
+            expected = "{\"levels\": 1}";
+            Assert.AreEqual(expected, actual, "Ошибка в тесте 5");
         }
     }
 }
