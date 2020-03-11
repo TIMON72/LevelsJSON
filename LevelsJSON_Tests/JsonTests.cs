@@ -1,15 +1,32 @@
 using LevelsJSON.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics;
 
 namespace LevelsJSON_Tests
 {
     [TestClass]
     public class JsonTests
-    {
+    {     
+        /// <summary>
+        /// Фикстура инициализации тестов
+        /// </summary>
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            Debug.WriteLine("Инициализация теста");
+        }
+        /// <summary>
+        /// Фикстура очистки тестов
+        /// </summary>
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            Debug.WriteLine("Очистка теста");
+        }
         /// <summary>
         /// Тестирование конструкторов
         /// </summary>
-        [TestMethod]
+        [DataTestMethod]
         public void JsonTest()
         {
             // Тест 1 (строка JSON)
@@ -76,6 +93,24 @@ namespace LevelsJSON_Tests
             actual = json.GetLevels();
             expected = "{\"levels\": 1}";
             Assert.AreEqual(expected, actual, "Ошибка в тесте 5");
+        }
+        /// <summary>
+        /// Тестирование сравнения объектов
+        /// </summary>
+        /// <remarks>Параметризированный тест</remarks>
+        /// <param name="obj1">Объект, который сравнивают</param>
+        /// <param name="obj2">Объект, с которым сравнивают</param>
+        /// <param name="expected">Ожидаемый результат (true или false)</param>
+        [DataRow("{\"key1\": \"value1\"}", "{\"key1\": \"value1\"}", true)]
+        [DataRow("{\"key1\": \"value1\"}", "{\"key2\": \"value2\"}", false)]
+        [DataRow("{\"key1\": \"true\"}", "{\"key1\": true }", false)]
+        [DataTestMethod]
+        public void EqualsTest(dynamic obj1, dynamic obj2, bool expected)
+        {
+            Json json1 = new Json(obj1);
+            Json json2 = new Json(obj2);
+            bool actual = json1.Equals(json2);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

@@ -79,5 +79,24 @@ namespace LevelsJSON.Models
                     levelsCounter--;
             return "{\"levels\": " + levelsNumber + "}";
         }
+        /// <summary>
+        /// Перегрузка метода <see cref="object.GetHashCode"/>
+        /// </summary>
+        /// <returns>Возвращает хэш-код, формируемый из свойств класса</returns>
+        public override int GetHashCode()
+        {
+            return String.GetHashCode() ^ IsInvalid.GetHashCode();
+        }
+        /// <summary>
+        /// Перегрузка метода <see cref="object.Equals(object)"/>
+        /// </summary>
+        /// <param name="obj">Объект, с которым сравнивают</param>
+        /// <returns>Возвращает true или false</returns>
+        public override bool Equals(object obj)
+        {
+            if (String == ((Json)obj).String && IsInvalid == ((Json)obj).IsInvalid)
+                return true;
+            return false;
+        }
     }
 }
