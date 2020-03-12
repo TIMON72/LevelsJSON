@@ -1,14 +1,26 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
+    <Compile Remove="LevelsJSON_Documentation\**" />
     <Compile Remove="LevelsJSON_Tests\**" />
+    <Content Remove="LevelsJSON_Documentation\**" />
     <Content Remove="LevelsJSON_Tests\**" />
+    <EmbeddedResource Remove="LevelsJSON_Documentation\**" />
     <EmbeddedResource Remove="LevelsJSON_Tests\**" />
+    <None Remove="LevelsJSON_Documentation\**" />
     <None Remove="LevelsJSON_Tests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\index.html" />
   </ItemGroup>
 
 

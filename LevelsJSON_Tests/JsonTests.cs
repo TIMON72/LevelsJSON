@@ -4,6 +4,9 @@ using System.Diagnostics;
 
 namespace LevelsJSON_Tests
 {
+    /// <summary>
+    /// Тестовый класс <see cref="Json"/>
+    /// </summary>
     [TestClass]
     public class JsonTests
     {     
@@ -24,7 +27,7 @@ namespace LevelsJSON_Tests
             Debug.WriteLine("Очистка теста");
         }
         /// <summary>
-        /// Тестирование конструкторов
+        /// Тестирование <see cref="Json(dynamic)"/>
         /// </summary>
         [DataTestMethod]
         public void JsonTest()
@@ -63,7 +66,7 @@ namespace LevelsJSON_Tests
             Assert.AreEqual(expected, actual.String, "Ошибка в тесте 8");
         }
         /// <summary>
-        /// Тестирование получения количества уровней глубины вложенности
+        /// Тестирование <see cref="Json.GetLevels"/>
         /// </summary>
         [TestMethod]
         public void GetLevelsTest()
@@ -95,7 +98,7 @@ namespace LevelsJSON_Tests
             Assert.AreEqual(expected, actual, "Ошибка в тесте 5");
         }
         /// <summary>
-        /// Тестирование сравнения объектов
+        /// Тестирование <see cref="Json.Equals(object)"/>
         /// </summary>
         /// <remarks>Параметризированный тест</remarks>
         /// <param name="obj1">Объект, который сравнивают</param>
