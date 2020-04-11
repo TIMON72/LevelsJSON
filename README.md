@@ -16,9 +16,9 @@
 6. Открыть браузер и проверить доступность сервера http://localhost:5000/index.html
 7. Отправить запрос требуемому методу через [Postman](https://www.postman.com/) или аналог
 ### Тестирование программы из под любой ОС
-1. Открыть командную строку в `.\LevelsJSON_Test\`
+1. Открыть командную строку в `.\LevelsJSON_Tests\`
 2. Выполнить развертывание приложения консольной командой: `dotnet publish LevelsJSON_Tests.csproj`
-3. Перейти в каталог с полученными файлами: `.\LevelsJSON_Test\bin\Debug\netcoreapp3.1\publish\`
+3. Перейти в каталог с полученными файлами: `.\LevelsJSON_Tests\bin\Debug\netcoreapp3.1\publish\`
 4. Открыть командную строку и выполнить команду: `dotnet vstest LevelsJSON_Tests.dll`
 ### Запуск и тестирование программы в Visual Studio
 1. Запустить решение `LevelsJSON.sln`
