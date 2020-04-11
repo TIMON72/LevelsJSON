@@ -1,5 +1,6 @@
 ﻿using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Text.Unicode;
 
 namespace LevelsJSON.Models
@@ -17,6 +18,32 @@ namespace LevelsJSON.Models
         /// Корректность JSON
         /// </summary>
         public bool IsInvalid { get; set; } = false;
+        /// <summary>
+        /// Парсинг
+        /// </summary>
+        /// <param name="input">Строковое представление JSON-данных</param>
+        /// <returns>Распарсенное строковое представление JSON-данных</returns>
+        public static string Parse(string input)
+        {
+            Regex regex;
+            MatchCollection matches;
+            string pattern;
+            // Парсинг целых чисел
+            pattern = "([+-]?\\d+[.]?\\d*)|(\"[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*\")"; // найти все целые числа +/- int double и выражения в "..."
+            regex = new Regex(pattern);
+            matches = regex.Matches(input);
+            foreach (Match m in matches)
+            {
+                // Число не в "..."?
+                if (!m.Value.Contains('"'))
+                {
+                    double numberDouble = double.Parse(m.Value.Replace('.',','));
+                    int numberInt = int.Parse(numberDouble.ToString());
+                    input = input.Replace(m.Value, numberInt.ToString());
+                }
+            }
+            return input;
+        }
         /// <summary>
         /// Конструктор, принимающий любой тип данных, который можно привести к string и десерилизовать в JSON.
         /// Формат входных данных должен соответствовать JSON.
@@ -36,6 +63,8 @@ namespace LevelsJSON.Models
                     Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
                     WriteIndented = true
                 };
+                // Парсинг
+                input = Json.Parse(input.ToString());
                 // Десериализация входных данных в JSON-формат
                 JsonElement json = JsonSerializer.Deserialize<JsonElement>(input.ToString(), options);
                 // Сериализация JSON в JSON-строку
@@ -97,6 +126,14 @@ namespace LevelsJSON.Models
             if (String == ((Json)obj).String && IsInvalid == ((Json)obj).IsInvalid)
                 return true;
             return false;
+        }
+        /// <summary>
+        /// Перегрузка метода <see cref="object.ToString()"/>
+        /// </summary>
+        /// <returns>Возвращает строковое представление объекта <see cref="Json"/></returns>
+        public override string ToString()
+        {
+            return String;
         }
     }
 }

@@ -64,6 +64,14 @@ namespace LevelsJSON_Tests
             actual = new Json("{\"key\": \"\\\"value1\\\" \\\"{[value2, value3]}\\\"\"}");
             expected = "{\"key\": \"\\\"value1\\\" \\\"{[value2, value3]}\\\"\"}";
             Assert.AreEqual(expected, actual.String, "Ошибка в тесте 8");
+            // Тест 9
+            actual = new Json("{\"key\": +2}");
+            expected = "{\"key\": 2}";
+            Assert.AreEqual(expected, actual.String, "Ошибка в тесте 9");
+            // Тест 10
+            actual = new Json("{\"key1\": -2.0, \"key2\": \"2\", \"key3\": 2.0, \"key4\": -2}");
+            expected = "{\"key1\": -2, \"key2\": \"2\", \"key3\": 2, \"key4\": -2}";
+            Assert.AreEqual(expected, actual.String, "Ошибка в тесте 10");
         }
         /// <summary>
         /// Тестирование <see cref="Json.GetLevels"/>
@@ -96,6 +104,24 @@ namespace LevelsJSON_Tests
             actual = json.GetLevels();
             expected = "{\"levels\": 1}";
             Assert.AreEqual(expected, actual, "Ошибка в тесте 5");
+        }
+        /// <summary>
+        /// Тестирование <see cref="Json.GetHashCode(object)"/>
+        /// </summary>
+        /// <remarks>Параметризированный тест</remarks>
+        /// <param name="obj1">Объект, который сравнивают</param>
+        /// <param name="obj2">Объект, с которым сравнивают</param>
+        /// <param name="expected">Ожидаемый результат (true или false)</param>
+        [DataRow("{\"key1\": \"value1\"}", "{\"key1\": \"value1\"}", true)]
+        [DataRow("{\"key1\": \"value1\"}", "{\"key2\": \"value2\"}", false)]
+        [DataRow("{\"key1\": \"true\"}", "{\"key1\": true }", false)]
+        [DataTestMethod]
+        public void GetHashCodeTest(dynamic obj1, dynamic obj2, bool expected)
+        {
+            Json json1 = new Json(obj1);
+            Json json2 = new Json(obj2);
+            bool actual = json1.GetHashCode() == json2.GetHashCode();
+            Assert.AreEqual(expected, actual);
         }
         /// <summary>
         /// Тестирование <see cref="Json.Equals(object)"/>
