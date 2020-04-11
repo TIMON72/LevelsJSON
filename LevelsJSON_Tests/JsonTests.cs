@@ -1,117 +1,117 @@
-using LevelsJSON.Models;
+п»їusing LevelsJSON.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 
 namespace LevelsJSON_Tests
 {
     /// <summary>
-    /// Тестовый класс <see cref="Json"/>
+    /// РўРµСЃС‚РѕРІС‹Р№ РєР»Р°СЃСЃ <see cref="Json"/>
     /// </summary>
     [TestClass]
     public class JsonTests
     {     
         /// <summary>
-        /// Фикстура инициализации тестов
+        /// Р¤РёРєСЃС‚СѓСЂР° РёРЅРёС†РёР°Р»РёР·Р°С†РёРё С‚РµСЃС‚РѕРІ
         /// </summary>
         [TestInitialize]
         public void TestInitialize()
         {
-            Debug.WriteLine("Инициализация теста");
+            Debug.WriteLine("РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ С‚РµСЃС‚Р°");
         }
         /// <summary>
-        /// Фикстура очистки тестов
+        /// Р¤РёРєСЃС‚СѓСЂР° РѕС‡РёСЃС‚РєРё С‚РµСЃС‚РѕРІ
         /// </summary>
         [TestCleanup]
         public void TestCleanup()
         {
-            Debug.WriteLine("Очистка теста");
+            Debug.WriteLine("РћС‡РёСЃС‚РєР° С‚РµСЃС‚Р°");
         }
         /// <summary>
-        /// Тестирование <see cref="Json(dynamic)"/>
+        /// РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ <see cref="Json(dynamic)"/>
         /// </summary>
         [DataTestMethod]
         public void JsonTest()
         {
-            // Тест 1 (строка JSON)
+            // РўРµСЃС‚ 1 (СЃС‚СЂРѕРєР° JSON)
             var actual = new Json("{\"key\": \"value\"}");
             var expected = "{\"key\": \"value\"}";
-            Assert.AreEqual(expected, actual.String, "Ошибка в тесте 1");
-            // Тест 2 (строка JSON с опечаткой)
+            Assert.AreEqual(expected, actual.String, "РћС€РёР±РєР° РІ С‚РµСЃС‚Рµ 1");
+            // РўРµСЃС‚ 2 (СЃС‚СЂРѕРєР° JSON СЃ РѕРїРµС‡Р°С‚РєРѕР№)
             actual = new Json("{\"key: \"value\"}");
             expected = "{\"error\": \"Invalid JSON\"}";
-            Assert.AreEqual(expected, actual.String, "Ошибка в тесте 2");
-            // Тест 3 (объект JSON)
+            Assert.AreEqual(expected, actual.String, "РћС€РёР±РєР° РІ С‚РµСЃС‚Рµ 2");
+            // РўРµСЃС‚ 3 (РѕР±СЉРµРєС‚ JSON)
             actual = new Json(actual);
             expected = "{\"error\": \"Invalid JSON\"}";
-            Assert.AreEqual(expected, actual.String, "Ошибка в тесте 3");
-            // Тест 4 (объект int)
+            Assert.AreEqual(expected, actual.String, "РћС€РёР±РєР° РІ С‚РµСЃС‚Рµ 3");
+            // РўРµСЃС‚ 4 (РѕР±СЉРµРєС‚ int)
             actual = new Json(1);
             expected = "{\"error\": \"Invalid JSON\"}";
-            Assert.AreEqual(expected, actual.String, "Ошибка в тесте 4");
-            // Тест 5 (объект bool)
+            Assert.AreEqual(expected, actual.String, "РћС€РёР±РєР° РІ С‚РµСЃС‚Рµ 4");
+            // РўРµСЃС‚ 5 (РѕР±СЉРµРєС‚ bool)
             actual = new Json(true);
             expected = "{\"error\": \"Invalid JSON\"}";
-            Assert.AreEqual(expected, actual.String, "Ошибка в тесте 5");
-            // Тест 6 (объект null)
+            Assert.AreEqual(expected, actual.String, "РћС€РёР±РєР° РІ С‚РµСЃС‚Рµ 5");
+            // РўРµСЃС‚ 6 (РѕР±СЉРµРєС‚ null)
             actual = new Json(null);
             expected = "{\"error\": \"Invalid JSON\"}";
-            Assert.AreEqual(expected, actual.String, "Ошибка в тесте 6");
-            // Тест 7 (объект double)
+            Assert.AreEqual(expected, actual.String, "РћС€РёР±РєР° РІ С‚РµСЃС‚Рµ 6");
+            // РўРµСЃС‚ 7 (РѕР±СЉРµРєС‚ double)
             actual = new Json(1.0);
             expected = "{\"error\": \"Invalid JSON\"}";
-            Assert.AreEqual(expected, actual.String, "Ошибка в тесте 7");
-            // Тест 8 (объект JSON c { [ " внутри значения)
+            Assert.AreEqual(expected, actual.String, "РћС€РёР±РєР° РІ С‚РµСЃС‚Рµ 7");
+            // РўРµСЃС‚ 8 (РѕР±СЉРµРєС‚ JSON c { [ " РІРЅСѓС‚СЂРё Р·РЅР°С‡РµРЅРёСЏ)
             actual = new Json("{\"key\": \"\\\"value1\\\" \\\"{[value2, value3]}\\\"\"}");
             expected = "{\"key\": \"\\\"value1\\\" \\\"{[value2, value3]}\\\"\"}";
-            Assert.AreEqual(expected, actual.String, "Ошибка в тесте 8");
-            // Тест 9
+            Assert.AreEqual(expected, actual.String, "РћС€РёР±РєР° РІ С‚РµСЃС‚Рµ 8");
+            // РўРµСЃС‚ 9
             actual = new Json("{\"key\": +2}");
             expected = "{\"key\": 2}";
-            Assert.AreEqual(expected, actual.String, "Ошибка в тесте 9");
-            // Тест 10
+            Assert.AreEqual(expected, actual.String, "РћС€РёР±РєР° РІ С‚РµСЃС‚Рµ 9");
+            // РўРµСЃС‚ 10
             actual = new Json("{\"key1\": -2.0, \"key2\": \"2\", \"key3\": 2.0, \"key4\": -2}");
             expected = "{\"key1\": -2, \"key2\": \"2\", \"key3\": 2, \"key4\": -2}";
-            Assert.AreEqual(expected, actual.String, "Ошибка в тесте 10");
+            Assert.AreEqual(expected, actual.String, "РћС€РёР±РєР° РІ С‚РµСЃС‚Рµ 10");
         }
         /// <summary>
-        /// Тестирование <see cref="Json.GetLevels"/>
+        /// РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ <see cref="Json.GetLevels"/>
         /// </summary>
         [TestMethod]
         public void GetLevelsTest()
         {
-            // Тест 1
+            // РўРµСЃС‚ 1
             Json json = new Json("{\"key\": \"value\"}");
             var actual = json.GetLevels();
             var expected = "{\"levels\": 1}";
-            Assert.AreEqual(expected, actual, "Ошибка в тесте 1");
-            // Тест 2
-            json = new Json("{\"identity\": {\"name\": \"Test\", \"translations\": [{\"order\": 1, \"language\": \"ru\", \"value\": \"Тест\"}]}}");
+            Assert.AreEqual(expected, actual, "РћС€РёР±РєР° РІ С‚РµСЃС‚Рµ 1");
+            // РўРµСЃС‚ 2
+            json = new Json("{\"identity\": {\"name\": \"Test\", \"translations\": [{\"order\": 1, \"language\": \"ru\", \"value\": \"РўРµСЃС‚\"}]}}");
             actual = json.GetLevels();
             expected = "{\"levels\": 4}";
-            Assert.AreEqual(expected, actual, "Ошибка в тесте 2");
-            // Тест 3
+            Assert.AreEqual(expected, actual, "РћС€РёР±РєР° РІ С‚РµСЃС‚Рµ 2");
+            // РўРµСЃС‚ 3
             json = new Json("{\"test1\": true, \"test2\": [null, 1]}");
             actual = json.GetLevels();
             expected = "{\"levels\": 2}";
-            Assert.AreEqual(expected, actual, "Ошибка в тесте 3");
-            // Тест 4
+            Assert.AreEqual(expected, actual, "РћС€РёР±РєР° РІ С‚РµСЃС‚Рµ 3");
+            // РўРµСЃС‚ 4
             json = new Json("{\"title\":\"Conference\",\"participants\":[{},{}]}");
             actual = json.GetLevels();
             expected = "{\"levels\": 3}";
-            Assert.AreEqual(expected, actual, "Ошибка в тесте 4");
-            // Тест 5
+            Assert.AreEqual(expected, actual, "РћС€РёР±РєР° РІ С‚РµСЃС‚Рµ 4");
+            // РўРµСЃС‚ 5
             json = new Json("{\"key\": \"\\\"value1\\\" \\\"{[value2, value3]}\\\"\"}");
             actual = json.GetLevels();
             expected = "{\"levels\": 1}";
-            Assert.AreEqual(expected, actual, "Ошибка в тесте 5");
+            Assert.AreEqual(expected, actual, "РћС€РёР±РєР° РІ С‚РµСЃС‚Рµ 5");
         }
         /// <summary>
-        /// Тестирование <see cref="Json.GetHashCode(object)"/>
+        /// РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ <see cref="Json.GetHashCode(object)"/>
         /// </summary>
-        /// <remarks>Параметризированный тест</remarks>
-        /// <param name="obj1">Объект, который сравнивают</param>
-        /// <param name="obj2">Объект, с которым сравнивают</param>
-        /// <param name="expected">Ожидаемый результат (true или false)</param>
+        /// <remarks>РџР°СЂР°РјРµС‚СЂРёР·РёСЂРѕРІР°РЅРЅС‹Р№ С‚РµСЃС‚</remarks>
+        /// <param name="obj1">РћР±СЉРµРєС‚, РєРѕС‚РѕСЂС‹Р№ СЃСЂР°РІРЅРёРІР°СЋС‚</param>
+        /// <param name="obj2">РћР±СЉРµРєС‚, СЃ РєРѕС‚РѕСЂС‹Рј СЃСЂР°РІРЅРёРІР°СЋС‚</param>
+        /// <param name="expected">РћР¶РёРґР°РµРјС‹Р№ СЂРµР·СѓР»СЊС‚Р°С‚ (true РёР»Рё false)</param>
         [DataRow("{\"key1\": \"value1\"}", "{\"key1\": \"value1\"}", true)]
         [DataRow("{\"key1\": \"value1\"}", "{\"key2\": \"value2\"}", false)]
         [DataRow("{\"key1\": \"true\"}", "{\"key1\": true }", false)]
@@ -124,12 +124,12 @@ namespace LevelsJSON_Tests
             Assert.AreEqual(expected, actual);
         }
         /// <summary>
-        /// Тестирование <see cref="Json.Equals(object)"/>
+        /// РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ <see cref="Json.Equals(object)"/>
         /// </summary>
-        /// <remarks>Параметризированный тест</remarks>
-        /// <param name="obj1">Объект, который сравнивают</param>
-        /// <param name="obj2">Объект, с которым сравнивают</param>
-        /// <param name="expected">Ожидаемый результат (true или false)</param>
+        /// <remarks>РџР°СЂР°РјРµС‚СЂРёР·РёСЂРѕРІР°РЅРЅС‹Р№ С‚РµСЃС‚</remarks>
+        /// <param name="obj1">РћР±СЉРµРєС‚, РєРѕС‚РѕСЂС‹Р№ СЃСЂР°РІРЅРёРІР°СЋС‚</param>
+        /// <param name="obj2">РћР±СЉРµРєС‚, СЃ РєРѕС‚РѕСЂС‹Рј СЃСЂР°РІРЅРёРІР°СЋС‚</param>
+        /// <param name="expected">РћР¶РёРґР°РµРјС‹Р№ СЂРµР·СѓР»СЊС‚Р°С‚ (true РёР»Рё false)</param>
         [DataRow("{\"key1\": \"value1\"}", "{\"key1\": \"value1\"}", true)]
         [DataRow("{\"key1\": \"value1\"}", "{\"key2\": \"value2\"}", false)]
         [DataRow("{\"key1\": \"true\"}", "{\"key1\": true }", false)]
