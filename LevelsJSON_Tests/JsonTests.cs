@@ -72,6 +72,10 @@ namespace LevelsJSON_Tests
             actual = new Json("{\"key1\": -2.0, \"key2\": \"2\", \"key3\": 2.0, \"key4\": -2}");
             expected = "{\"key1\": -2, \"key2\": \"2\", \"key3\": 2, \"key4\": -2}";
             Assert.AreEqual(expected, actual.String, "Ошибка в тесте 10");
+            // Тест 11
+            actual = new Json("{\"key1\": -0, \"key2\": +0, \"key3\": 0}");
+            expected = "{\"key1\": 0, \"key2\": 0, \"key3\": 0}";
+            Assert.AreEqual(expected, actual.String, "Ошибка в тесте 11");
         }
         /// <summary>
         /// Тестирование <see cref="Json.GetLevels"/>
